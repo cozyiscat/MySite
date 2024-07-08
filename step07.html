@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6단계(슬라이더Zone)</title>
+    <title>7단계(슬라이더Zone-자바스크립트)</title>
     <script src="js/jquery.js"></script>
      <style>
         * {
@@ -180,7 +180,7 @@
                         display: flex;
                         position: relative;
                         left: 0; /* 슬라이딩시 좌표 변경으로 슬라이딩 표현 */
-                        /* transition: left 0.5s ease; */
+                        transition: left 0.5s ease; /*ease 가속도조정 빨리갔다 천천히도착*/
                     }
                     .slider_img {
                         min-width: 100%;
@@ -228,9 +228,9 @@
                             <li class="slider_img"><img src="img/1.jpg" alt=""></li>
                             <li class="slider_img"><img src="img/2.jpg" alt=""></li>
                             <li class="slider_img"><img src="img/3.jpg" alt=""></li>
-                            <li class="slider_img"><img src="img/1.jpg" alt=""></li>
+                            <!-- <li class="slider_img"><img src="img/1.jpg" alt=""></li>
                             <li class="slider_img"><img src="img/2.jpg" alt=""></li>
-                            <li class="slider_img"><img src="img/3.jpg" alt=""></li>
+                            <li class="slider_img"><img src="img/3.jpg" alt=""></li> -->
                         </ul>
                         <div class="control_panel">
                             <div class="control_btn active" data-index="0"></div>
@@ -243,12 +243,43 @@
                         </div>
                     </div>
                 </div>
-                <!-- <script>
+                <script>
                     $(function(){
                         const $sliderPanel = $('.slider_panel')
                         const $controlBtn = $('.control_btn')
+                        const $leftBtn = $('.left_btn img')
+                        const $rightBtn = $('.right_btn img')
+
+                        let currentIndex = 0;
+                        function updateSlider(index){
+                            $sliderPanel.css('left',`-${index * 100}%`);
+                            $controlBtn.removeClass('active');
+                            $controlBtn.eq(index).addClass('active');
+                        }
+                        $leftBtn.on('click', function(){
+                            currentIndex--;
+                            if(currentIndex<0){
+                                currentIndex=0;
+                            }
+                            updateSlider(currentIndex);
+                        });
+                        $rightBtn.on('click', function(){
+                            currentIndex++;
+                            if(currentIndex>2){
+                                currentIndex=2;
+                            }
+                            updateSlider(currentIndex);
+                        });
+                        $controlBtn.on('click',function(){
+                            currentIndex = parseInt($(this).data('index'));
+                            updateSlider(currentIndex);
+                        });
+                        setInterval(function(){
+                            currentIndex = (currentIndex+1) % $controlBtn.length;
+                            updateSlider(currentIndex);
+                        },3000);
                     });
-                </script> -->
+                </script>
                 <!-- 슬라이더 Zone 끝 -->
             </div>
             <!-- 상단 Area 끝 -->
